@@ -1,3 +1,8 @@
+THIS IS STUDENT PROJECT COPIED FROM https://github.com/ihinstone/react-gotapp.git
+
+HERE I'M JUST TRAINING WITH UDEMY REACT COURSES!
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
