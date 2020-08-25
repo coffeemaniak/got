@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import './itemList.css';
+import GotResourses from "../../services/gotServices";
 export default class ItemList extends Component {
 
+    gotResourses = new GotResourses();
+
+    state = {
+        charList: null
+    }
+    
     render() {
         return (
             <ul className="item-list list-group">

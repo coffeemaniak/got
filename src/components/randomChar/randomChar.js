@@ -2,19 +2,25 @@ import React, {Component} from 'react';
 import './randomChar.css';
 import GotResourses from "../../services/gotServices";
 import Spinner from '../spinner/';
+import ErrorMessage from '../errorMessage';
 
 export default class RandomChar extends Component {
-
-    constructor() {
-        super();
-        this.updateChar();
-    }
 
     gotResourses = new GotResourses();
 
     state = {
         char: {},
-        loading: true
+        loading: true,
+        error: false
+    };
+
+    componentDidMount() {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timerId);
     }
 
     onCharLoaded = (char) => {
@@ -24,22 +30,33 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
+    onError = (err) => {
+        this.setState({
+            error: true,
+            loading: false
+        })
+    }
+
+    updateChar = () => {
         const id = Math.floor(Math.random()*140 + 25);
-        this.gotResourses.getCharacter(id)
+        this.gotResourses
+            .getCharacter(id)
             .then(this.onCharLoaded)
+            .catch(this.onError)
     }
 
     render() {
 
-        const {char, loading } = this.state;
+        const {char, loading, error } = this.state;
 
         const spinner = loading ? <Spinner/> : null;
-        const content = !loading ? <View char={char}/> : null;
+        const content = !(loading || error) ? <View char={char}/> : null;
+        const errorMessage = error ? <ErrorMessage/> : null;
 
         return (
             <div className="random-block rounded">
                 {spinner}
+                {errorMessage}
                 {content}
             </div>
         );
