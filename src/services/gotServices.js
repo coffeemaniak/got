@@ -39,7 +39,7 @@ export default class GotResourses {
         return this.getResources(`/books/${id}`)
     }
 
-    _transformCharacter(char) {
+    _transformCharacter = (char) => {
         return {
             name: char.name,
             gender: char.gender,
