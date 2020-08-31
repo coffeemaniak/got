@@ -4,9 +4,13 @@ import ItemList from '../itemList';
 import CharDetails from '../charDetails';
 import ErrorMessage from "../errorMessage";
 import Spinner from '../spinner';
+import GotResourses from "../../services/gotServices";
 import "./characterPage.css";
 
 export default class CharacterPage extends Component {
+    
+    gotResourses = new GotResourses();
+
     state = {
         selectedChar: null,
         error: false,
@@ -27,7 +31,7 @@ export default class CharacterPage extends Component {
     render() {
         const {loading} = this.state;
         const spinner = loading ? <Spinner/> : null;
-        
+
         if (this.state.error) {
             return <ErrorMessage/>
         }
@@ -35,7 +39,10 @@ export default class CharacterPage extends Component {
             <Row>
             <Col md='6'>
                 {spinner}
-                <ItemList onCharSelected={this.onCharSelected}/>
+                <ItemList 
+                    onCharSelected={this.onCharSelected}
+                    getData={this.gotResourses.getAllCharacters}
+                />
             </Col>
             <Col md='6'>
                 {spinner}
