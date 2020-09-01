@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Col, Row} from 'reactstrap';
 import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharDetails, {Field} from '../charDetails';
 import ErrorMessage from "../errorMessage";
 import Spinner from '../spinner';
 import GotResourses from "../../services/gotServices";
+import RowBlock from "../rowBlock";
 import "./characterPage.css";
 
 export default class CharacterPage extends Component {
-    
+
     gotResourses = new GotResourses();
 
     state = {
@@ -35,20 +36,24 @@ export default class CharacterPage extends Component {
         if (this.state.error) {
             return <ErrorMessage/>
         }
-        return(
-            <Row>
-            <Col md='6'>
-                {spinner}
-                <ItemList 
+
+        const itemList = (
+            <ItemList 
                     onCharSelected={this.onCharSelected}
                     getData={this.gotResourses.getAllCharacters}
-                />
-            </Col>
-            <Col md='6'>
-                {spinner}
-                <CharDetails charId={this.state.selectedChar}/>
-            </Col>
-        </Row>
+                    renderItem={(item) => `${item.name} (${item.gender})`}
+            />
+        );
+
+        const charDetails = (
+            <CharDetails charId={this.state.selectedChar}>
+                <Field field='gender' label='Gender'/>
+                <Field field='born' label='Born'/>
+            </CharDetails>
+        )
+
+        return(
+            <RowBlock left={itemList} right={charDetails}/>
         )
     }
 }
