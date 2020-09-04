@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default class GotResourses {
     constructor() {
         this._apiBase = "https://www.anapioficeandfire.com/api"
@@ -31,12 +33,14 @@ export default class GotResourses {
         return this.getResources(`/houses/${id}`)
     }
 
-    getAllBooks = () => {
-        return this.getResources("/books/")
+    getAllBooks = async () => {
+        const res = await this.getResources(`/books/`);
+        return res.map(this._transformBook);
     }
 
-    getBook = (id) => {
-        return this.getResources(`/books/${id}`)
+    getBook = async (id) => {
+        const book = await this.getResources(`/books/${id}/`);
+        return this._transformBook(book);
     }
 
     isSet(data) {
@@ -45,7 +49,12 @@ export default class GotResourses {
         } else {
             return "no data"
         }
-    }  
+    }
+
+    transformData = (data) => {
+        const time = moment(data).format("YYYY/MM/DD");
+        return time;
+    }
 
     _extractId = (item) => {
         const idRegExp = /\/([0-9]*)$/;
@@ -80,7 +89,7 @@ export default class GotResourses {
             name: this.isSet(book.name),
             numberOfPages: this.isSet(book.numberOfPages),
             publisher: this.isSet(book.publisher),
-            released: this.isSet(book.released)
+            released: this.transformData(book.released)
         };
     }
 }

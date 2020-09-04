@@ -4,6 +4,7 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from "../errorMessage";
 import CharacterPage from "../characterPage";
+import BookPage from "../pages";
 
 
 export default class App extends Component {
@@ -51,6 +52,7 @@ export default class App extends Component {
                     </Col>
                 </Row>
                 <CharacterPage/>
+                <BookPage/>
             </Container>
         </>
         );
