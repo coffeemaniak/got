@@ -4,7 +4,8 @@ import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from "../errorMessage";
 import CharacterPage from "../characterPage";
-import BookPage from "../pages";
+import {BookPage, HousePage} from "../pages";
+
 
 
 export default class App extends Component {
@@ -53,6 +54,7 @@ export default class App extends Component {
                 </Row>
                 <CharacterPage/>
                 <BookPage/>
+                <HousePage/>
             </Container>
         </>
         );

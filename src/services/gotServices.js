@@ -25,12 +25,14 @@ export default class GotResourses {
         return this._transformCharacter(character);
     }
 
-    getAllHouses = () => {
-        return this.getResources("/houses/")
+    getAllHouses = async () => {
+        const houses = await this.getResources("/houses/");
+        return houses.map(this._transformHouse);
     }
 
-    getHouse = (id) => {
-        return this.getResources(`/houses/${id}`)
+    getHouse = async (id) => {
+        const house = await this.getResources(`/houses/${id}`);
+        return this._transformHouse(house);
     }
 
     getAllBooks = async () => {

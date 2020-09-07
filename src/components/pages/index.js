@@ -1,2 +1,6 @@
 import BookPage from "./bookPage";
-export default BookPage;
+import HousePage from "./housePage";
+export {
+    BookPage,
+    HousePage
+}
